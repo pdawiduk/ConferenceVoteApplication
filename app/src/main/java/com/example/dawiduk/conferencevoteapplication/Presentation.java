@@ -1,15 +1,24 @@
 package com.example.dawiduk.conferencevoteapplication;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by dawiduk on 3-2-16.
  */
 public class Presentation {
+    @SerializedName("Id")
     private int id;
+    @SerializedName("Presentation")
     private String presentation;
+    @SerializedName("Presenter")
     private String presenter;
+    @SerializedName("Start")
     private float start;
+    @SerializedName("Desc")
     private String desc;
+    @SerializedName("Room")
     private String room;
+    @SerializedName("Vote")
     private Double vote;
 
 
