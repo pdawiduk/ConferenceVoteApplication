@@ -14,7 +14,7 @@ import retrofit.http.POST;
 public interface PresentationsInterface {
 
     @GET("/show")
-    Call<List<Presentation>> getPresentations();
+  Call<List<Presentation>> getPresentations();
 
 
 }
