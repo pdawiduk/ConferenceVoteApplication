@@ -1,0 +1,53 @@
+Showing commands matching 'show'
+
+[36mteam-show[0m (also 'show-team', 'team show')
+-----------------------------------------
+Display a team and its members
+
+[36msshkey-show[0m (also 'show-sshkey', 'sshkey show')
+-----------------------------------------------
+Show the SSH key with the given name
+
+[36mserver-show[0m (also 'show-server', 'server show')
+-----------------------------------------------
+Display the configuration of the given server
+
+[36menv-show[0m (also 'show-env', 'env show')
+--------------------------------------
+Show the value of one or more environment variable(s) currently set to your
+application
+
+[36mdomain-show[0m (also 'show-domain', 'domain show')
+-----------------------------------------------
+Display a domain and its applications
+
+[36mdeployment-show[0m (also 'show-deployment', 'deployment show')
+-----------------------------------------------------------
+Display details of the given deployment id.
+
+[36mcartridge-show[0m (also 'show-cartridge', 'cartridge show')
+--------------------------------------------------------
+Show useful information about a cartridge
+
+[36mapp-show[0m (also 'show-app', 'app show')
+--------------------------------------
+Display the properties of an application, including its URL, the SSH connection
+string, and the Git remote URL.  Will also display any cartridges, their scale,
+and any values they expose.
+
+The '--state' option will retrieve information from each cartridge in the
+application, which may include cartridge specific text.
+
+The '--configuration' option will display configuration values set in the
+application. Use 'rhc configure-app' to configure.
+
+To see information about the individual gears within an application, use
+'--gears', including whether they are started or stopped and their SSH host
+strings.  Passing '--gears quota' will show the free and maximum storage on each
+gear.
+
+If you want to run commands against individual gears, use:
+
+  rhc ssh <app> --gears '<command>'
+
+to run and display the output from each gear.
