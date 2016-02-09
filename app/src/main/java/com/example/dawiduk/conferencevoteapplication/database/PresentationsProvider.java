@@ -9,7 +9,7 @@ import android.support.annotation.Nullable;
 /**
  * Created by dawiduk on 3-2-16.
  */
-public class PresentationsPrivder extends ContentProvider {
+public class PresentationsProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         return false;
