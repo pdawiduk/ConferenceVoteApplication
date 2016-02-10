@@ -1,5 +1,6 @@
 package com.example.dawiduk.conferencevoteapplication.database;
 
+import android.content.ContentUris;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
@@ -13,10 +14,13 @@ public class PresentationsDBstruct {
         public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
         public static final String PATH_PRESENTATION = "presentation";
 
+        public static Uri buildLocationUri(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);}
+
         public static final Uri CONTENT_URI =
                 BASE_CONTENT_URI.buildUpon().appendPath(PATH_PRESENTATION).build();
 
-
+        public static final String TABLE_PRESENTATION_ID = "id";
         public static final String TABLE_NAME = "presentations";
         public static final String COLUMN_PRESENTER = "presenter";
         public static final String COLUMN_START = "start";

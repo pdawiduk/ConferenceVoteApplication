@@ -4,6 +4,7 @@ import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.Nullable;
@@ -26,14 +27,15 @@ public class PresentationsProvider extends ContentProvider {
 
 
     static UriMatcher buildUriMatcher(){
+
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         final String authority= PresentationsDb.CONTENT_AUTHORITY;
 
         matcher.addURI(authority,PresentationsDb.PATH_PRESENTATIONS,PRESENTATION);
         matcher.addURI(authority, PresentationsDb.PATH_PRESENTATIONS + "/#", PRESENTATION_ID);
         return matcher;
-
     }
+
     @Override
     public boolean onCreate() {
         dbHelper=new PresentationsDb(getContext());
@@ -43,12 +45,12 @@ public class PresentationsProvider extends ContentProvider {
     @Nullable
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        Cursor retCurosor;
+        Cursor retCursor;
 
         int help= uriMatcher.match(uri);
 
         if (help== PRESENTATION){
-            retCurosor=dbHelper.getWritableDatabase().query(
+            retCursor=dbHelper.getWritableDatabase().query(
                     PresentationsDb.DATABASE_NAME,
                     projection,
                     selection,
@@ -58,20 +60,20 @@ public class PresentationsProvider extends ContentProvider {
                     sortOrder
             );
         }
+        retCursor.setNotificationUri(getContext().getContentResolver(),uri);
+        return retCursor;
     }
 
     @Nullable
     @Override
     public String getType(Uri uri) {
 
-            switch (uriMatcher){
+            int help= uriMatcher.match(uri);
 
-                case PRESENTATION :
-                    return PresentationsDb.CONTENT_AUTHORITY;
+                if( help ==PRESENTATION ){
+                    return PresentationsDb.CONTENT_AUTHORITY;}
 
-                default :
-                    throw new UnsupportedOperationException("Unknown Uri "+ uri);
-            }
+                else throw new UnsupportedOperationException("Unknown uri: " + uri);
     }
 
     @Nullable
@@ -80,19 +82,36 @@ public class PresentationsProvider extends ContentProvider {
 
         final SQLiteDatabase sqLiteDatabase=dbHelper.getWritableDatabase();
 
-        Uri returnUri=null;
+        Uri returnUri;
 
         final int match = uriMatcher.match(uri);
 
-
-
             if (match== PRESENTATION){
-                sqLiteDatabase.insert(PresentationsDb.DATABASE_NAME,null,values);
+                returnUri= sqLiteDatabase.insert(PresentationsDb.DATABASE_NAME,null,values);
+            }
+            else throw new SQLException("Failed to insert row into"+ uri);
+        getContext().getContentResolver().notifyChange(uri,null);
+
+
+    }
+
+    @Override
+    public int bulkInsert(Uri uri, ContentValues[] values) {
+        final SQLiteDatabase db= dbHelper.getWritableDatabase();
+        final int match= uriMatcher.match(uri);
+        int returnCount =0;
+
+        if (match ==PRESENTATION){
+            for(ContentValues value : values){
+
+                long _id =db.insert(PresentationsDb.DATABASE_NAME,null,value);
+                if (_id != -1) returnCount++ ;
             }
 
-
-
-
+        }
+        db.endTransaction();
+        getContext().getContentResolver().notifyChange(uri, null);
+        return super.bulkInsert(uri, values);
     }
 
     @Override
@@ -114,6 +133,13 @@ public class PresentationsProvider extends ContentProvider {
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        return 0;
+        final SQLiteDatabase db = dbHelper.getWritableDatabase();
+        final  int match = uriMatcher.match(uri);
+
+        int rowsUpdated;
+
+        if(match == PRESENTATION){
+            rowsUpdated=db.update(PresentationsDb.DATABASE_NAME,values,selection,selectionArgs);
+        }
     }
 }
