@@ -1,5 +1,6 @@
 package com.example.dawiduk.conferencevoteapplication.database;
 
+import android.net.Uri;
 import android.provider.BaseColumns;
 
 /**
@@ -8,6 +9,12 @@ import android.provider.BaseColumns;
 public class PresentationsDBstruct {
 
     public static final class PresentationsEntry implements BaseColumns{
+        public static final String CONTENT_AUTHORITY = "com.example.dawiduk.conferencevoteapplication";
+        public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
+        public static final String PATH_PRESENTATION = "presentation";
+
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_PRESENTATION).build();
 
 
         public static final String TABLE_NAME = "presentations";

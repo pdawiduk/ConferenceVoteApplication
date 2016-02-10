@@ -28,8 +28,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, AgendaActivity.class);
                 startActivity(intent);
 
-
-
             }
         });
 
@@ -47,8 +45,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
-
-
         if (id == R.id.action_settings) {
             return true;
         }
@@ -57,9 +53,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
         Intent msgIntent = new Intent(MainActivity.this, AgendaFetcher.class);
         startService(msgIntent);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
     }
 }

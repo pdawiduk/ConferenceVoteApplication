@@ -26,20 +26,21 @@ public class AgendaFetcher extends IntentService {
 
     private static final String LOG_TAG = AgendaFetcher.class.getSimpleName();
 
-
     private List<Presentation> presentationList = new ArrayList<>();
-
 
     public AgendaFetcher() {
         super("AgendaFetcher");
 
     }
 
+    public List<Presentation> getPresentationList(){
+        return presentationList;
+    }
     @Override
     protected void onHandleIntent(Intent intent) {
+
         Gson gson = new Gson();
         OkHttpClient client = new OkHttpClient();
-
 
         Request request = new Request.Builder()
                 .url(ENDPOINT)
@@ -47,13 +48,14 @@ public class AgendaFetcher extends IntentService {
 
         try {
             okhttp3.Response response = client.newCall(request).execute();
+            Presentation[] pres = gson.fromJson(response.body().string(),Presentation[].class);
 
+            for (int i =0 ; i < pres.length; i++){
+                presentationList.add(pres[i]);
+            }
 
-         Presentation[] pres = gson.fromJson(response.body().string(),Presentation[].class);
+            Log.d(LOG_TAG, "Rozmiaren tablicy wynoski : tyle = " + String.valueOf(presentationList.size()));
 
-            Log.d(LOG_TAG,pres[3].getPresentation());
-            Toast toast = Toast.makeText(getApplicationContext(), presentationList.size(), Toast.LENGTH_SHORT);
-                    toast.show();
         } catch (IOException e) {
 
             Toast toast = Toast.makeText(getApplicationContext(), "niedziala", Toast.LENGTH_SHORT);

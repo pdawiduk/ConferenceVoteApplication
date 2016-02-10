@@ -29,6 +29,8 @@
         </activity>
         <service
             android:name=".AgendaFetcher"/>
+        <provider android:authorities="com.example.dawiduk.conferencevoteapplication"
+            android:name=".database.PresentationsProvider" />
     </application>
 
 </manifest>
