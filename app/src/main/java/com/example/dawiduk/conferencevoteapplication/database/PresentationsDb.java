@@ -13,10 +13,11 @@ public class PresentationsDb extends SQLiteOpenHelper {
 
     public static final String CONTENT_AUTHORITY = "com.example.dawiduk.conferencevoteapplication";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
-    public static final String PATH_PRESENTATIONS = "presentations";
+    public static final String TABLE_NAME = "presentations";
     public static final int DATABASE_VERSION =2;
 
     static final String DATABASE_NAME="presenations.db";
+
 
     public PresentationsDb(Context context ){
         super(context,DATABASE_NAME,null,DATABASE_VERSION);
