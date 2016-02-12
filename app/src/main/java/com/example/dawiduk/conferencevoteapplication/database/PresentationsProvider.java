@@ -171,6 +171,32 @@ public class PresentationsProvider extends ContentProvider {
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+        final SQLiteDatabase db = this.db.getWritableDatabase();
+        int help = uriMatcher.match(uri);
+        int rowsUpdated;
+
+        switch (help){
+            case PRESENTATION_LIST :
+                rowsUpdated= db.update(PresentationsDBstruct.PresentationsEntry.TABLE_NAME,
+                        values,
+                        selection,
+                        selectionArgs);
+                break;
+
+            case PRESENTATION_ID:
+                String id= uri.getLastPathSegment();
+                rowsUpdated=db.update(PresentationsDBstruct.PresentationsEntry.TABLE_NAME,
+                        values,
+                        PresentationsDBstruct.PresentationsEntry.TABLE_PRESENTATION_ID + " = " +id,
+                        null);
+                break;
+            default:
+                throw new IllegalArgumentException("unkown URI : " + uri);
+
+
+        }
+        getContext().getContentResolver().notifyChange(uri,null);
+        return rowsUpdated;
 
     }
 }
