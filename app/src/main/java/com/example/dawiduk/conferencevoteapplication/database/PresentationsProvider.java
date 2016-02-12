@@ -4,12 +4,9 @@ import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.Nullable;
-
-import com.example.dawiduk.conferencevoteapplication.Presentation;
 
 /**
  * Created by dawiduk on 3-2-16.
@@ -19,18 +16,17 @@ public class PresentationsProvider extends ContentProvider {
     private static final UriMatcher uriMatcher=buildUriMatcher();
     private PresentationsDb db;
 
-    static final int PRESENTATION =333;
+    static final int PRESENTATION_LIST =333;
     static final int PRESENTATION_ID =666;
 
 
-
     static UriMatcher buildUriMatcher(){
+
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         final String authority = PresentationsDb.CONTENT_AUTHORITY;
 
-        matcher.addURI(authority,PresentationsDb.);
-        matcher.addURI();
-
+        matcher.addURI(authority,PresentationsDBstruct.PresentationsEntry.PATH_PRESENTATION, PRESENTATION_LIST);
+        matcher.addURI(authority,PresentationsDBstruct.PresentationsEntry.PATH_PRESENTATION+"/#",PRESENTATION_ID);
         return matcher;
 
     }
@@ -51,7 +47,7 @@ public class PresentationsProvider extends ContentProvider {
 
         switch(match){
 
-            case PRESENTATION:{
+            case PRESENTATION_LIST:{
                 retCursor=db.getReadableDatabase().query(
                         PresentationsDb.TABLE_NAME,
                         projection,
@@ -75,8 +71,11 @@ public class PresentationsProvider extends ContentProvider {
     public String getType(Uri uri) {
         int help = uriMatcher.match(uri);
         switch (help){
-            case PRESENTATION:
-                return;
+            case PRESENTATION_LIST:
+                return PresentationsDBstruct.PresentationsEntry.CONTENT_TYPE;
+
+            case PRESENTATION_ID:
+                return PresentationsDBstruct.PresentationsEntry.CONTENT_TYPE;
             default:
                 throw new UnsupportedOperationException("Unkown URI: "+ uri);
         }
@@ -85,7 +84,13 @@ public class PresentationsProvider extends ContentProvider {
     @Nullable
     @Override
     public Uri insert(Uri uri, ContentValues values) {
+        final SQLiteDatabase db =this.db.getWritableDatabase();
+        int help= uriMatcher.match(uri);
+        Uri returnUri ;
+        switch (help){
 
+
+        }
     }
 
     @Override
@@ -96,7 +101,7 @@ public class PresentationsProvider extends ContentProvider {
 
         switch(help){
 
-            case PRESENTATION:{
+            case PRESENTATION_LIST:{
                 db.beginTransaction();
                 int returncount=0;
                 for (ContentValues value : values){
@@ -123,12 +128,20 @@ public class PresentationsProvider extends ContentProvider {
         if(selection== null) selection="1";
 
         switch(help) {
-            case PRESENTATION:
+            case PRESENTATION_LIST:
                 rowsDeleted = db.delete(PresentationsDBstruct.PresentationsEntry.TABLE_NAME, selection, selectionArgs);
                 break;
             case PRESENTATION_ID:
-                rowsDeleted=db.delete(PresentationsDBstruct.PresentationsEntry)
+                String id = uri.getLastPathSegment();
+                rowsDeleted=db.delete(PresentationsDBstruct.PresentationsEntry.TABLE_NAME, PresentationsDBstruct.PresentationsEntry._ID + " = " + id , selectionArgs);
+                break;
+
+            default:
+                throw new IllegalArgumentException("Unknown URI: " + uri);
         }
+
+        getContext().getContentResolver().notifyChange(uri,null);
+        return  rowsDeleted;
 
     }
 
