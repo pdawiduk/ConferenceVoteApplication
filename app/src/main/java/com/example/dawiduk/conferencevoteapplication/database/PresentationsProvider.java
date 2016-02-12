@@ -57,10 +57,24 @@ public class PresentationsProvider extends ContentProvider {
                         null,
                         sortOrder
                 );
-
-                default:
-                    throw new UnsupportedOperationException("no matched URI " + match + "Unkonown URI: " + uri);
+                break;
             }
+            case PRESENTATION_ID:{
+                String id = uri.getLastPathSegment();
+                retCursor=db.getReadableDatabase().query(
+                        PresentationsDb.TABLE_NAME,
+                        projection,
+                        PresentationsDBstruct.PresentationsEntry.TABLE_PRESENTATION_ID + " = " + id,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
+                break;
+            }
+
+            default:
+                throw new UnsupportedOperationException("no matched URI " + match + "Unkonown URI: " + uri);
         }
         retCursor.setNotificationUri(getContext().getContentResolver(),uri);
         return retCursor;
@@ -86,11 +100,21 @@ public class PresentationsProvider extends ContentProvider {
     public Uri insert(Uri uri, ContentValues values) {
         final SQLiteDatabase db =this.db.getWritableDatabase();
         int help= uriMatcher.match(uri);
-        Uri returnUri ;
+        Uri returnUri;
+        long id;
+
         switch (help){
-
-
+            case PRESENTATION_LIST:
+                id=db.insert(PresentationsDBstruct.PresentationsEntry.TABLE_NAME,
+                        null, values);
+                returnUri=PresentationsDBstruct.PresentationsEntry.buildPresentationUri(id);
+                break;
+            default :
+                throw new IllegalArgumentException("Unknown URI :" + uri);
         }
+        getContext().getContentResolver().notifyChange(uri,null);
+        return returnUri;
+
     }
 
     @Override
