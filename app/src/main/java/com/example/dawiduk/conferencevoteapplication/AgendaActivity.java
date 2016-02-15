@@ -27,11 +27,7 @@ import com.example.dawiduk.conferencevoteapplication.database.PresentationsDb;
 public class AgendaActivity extends AppCompatActivity {
 
 
-
-
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
-
     private ViewPager mViewPager;
 
     @Override
