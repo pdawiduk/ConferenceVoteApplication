@@ -65,7 +65,6 @@ public class AgendaFetcher extends IntentService {
 
             }
 
-
             int inserted = 0;
 
             if (contentList.size() > 0) {

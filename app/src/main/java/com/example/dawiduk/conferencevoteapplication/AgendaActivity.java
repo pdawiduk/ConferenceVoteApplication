@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,6 +20,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.example.dawiduk.conferencevoteapplication.database.PresentationsDBstruct;
+import com.example.dawiduk.conferencevoteapplication.database.PresentationsDb;
 
 public class AgendaActivity extends AppCompatActivity {
 
@@ -80,37 +84,12 @@ public class AgendaActivity extends AppCompatActivity {
 
         private static final String ARG_SECTION_NUMBER = "section_number";
 
-        private final static String[][]presentations=
-
-                {
-                        {
-                                "Keynote",
-                                "ASM hacks",
-                                "Java 8 Lambdas",
-                                "RxJava Essentials",
-                                "Tom Tom Challange",
-                                "Theory of Api Evolutions",
-                                "Indoor drone Programming",
-                                "Summary Christmas party"},
-                        {
-                                "   ",
-                                "QRIS to the max",
-                                "Buil yourself a drone ",
-                                "Who are Customer Care",
-                                "   ", "" +
-                                "Let's make a deal",
-                                "From atlantic to pacific",
-                                "    "},
-                        {
-                                "Command Line is not dead",
-                                "Cloud Formation for every engineer",
-                                "Functional Thinking ",
-                                "    ",
-                                "Competive Benchmarking",
-                                "MVC is so italian Cusine ", "  "}
-                }
-
-                ;
+        private final static String[] COLUMN_PRESENTATIONS={
+                PresentationsDBstruct.PresentationsEntry.TABLE_PRESENTATION_ID,
+                PresentationsDBstruct.PresentationsEntry.COLUMN_PRESENTATION,
+                PresentationsDBstruct.PresentationsEntry.COLUMN_PRESENTER,
+                PresentationsDBstruct.PresentationsEntry.COLUMN_START
+        };
 
         public PlaceholderFragment() {
         }
@@ -119,7 +98,7 @@ public class AgendaActivity extends AppCompatActivity {
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
-            args.putStringArray(ARG_SECTION_NUMBER, presentations[sectionNumber-1]);
+        //    args.putStringArray(ARG_SECTION_NUMBER, presentations[sectionNumber-1]);
             fragment.setArguments(args);
             return fragment;
         }
@@ -135,8 +114,7 @@ public class AgendaActivity extends AppCompatActivity {
                     );
 
             View rootView = inflater.inflate(R.layout.fragment_agenda, container, false);
-            ListView presentationList = (ListView) rootView.findViewById(R.id.presentation_list);
-            presentationList.setAdapter(adapter);
+            RecyclerView agendaRecycledView
             return rootView;
         }
     }
@@ -164,11 +142,11 @@ public class AgendaActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "ROOM 1";
+                    return "aula";
                 case 1:
-                    return "ROOM 2";
+                    return "room a";
                 case 2:
-                    return "ROOM 3";
+                    return "room c";
 
 
             }
