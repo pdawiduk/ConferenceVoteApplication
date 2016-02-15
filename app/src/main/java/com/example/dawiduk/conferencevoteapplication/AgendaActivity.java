@@ -128,8 +128,6 @@ public class AgendaActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
 
-
-
             adapter=new ArrayAdapter<String>(getActivity(),
                     R.layout.presentation_desc,
                     R.id.list_presentation_textview,

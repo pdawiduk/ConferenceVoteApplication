@@ -14,24 +14,28 @@ public class PresentationsDb extends SQLiteOpenHelper {
     public static final String CONTENT_AUTHORITY = "com.example.dawiduk.conferencevoteapplication";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
     public static final String TABLE_NAME = "presentations";
-    public static final int DATABASE_VERSION =2;
+    public static final int DATABASE_VERSION = 2;
 
-    static final String DATABASE_NAME="presenations.db";
+    static final String DATABASE_NAME = "presenations.db";
 
 
-    public PresentationsDb(Context context ){
-        super(context,DATABASE_NAME,null,DATABASE_VERSION);
+    public PresentationsDb(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        final String SQL_CREATE_PRESENTATIONS_TABLE= "CREATE TABLE "+ PresentationsDBstruct.PresentationsEntry.TABLE_NAME + " ("+
-                PresentationsDBstruct.PresentationsEntry._ID + " INTEGER PRIMARY KEY, " +
-                PresentationsDBstruct.PresentationsEntry.COLUMN_PRESENTATION +" TEXT UNIQUE  NOT NULL, "+
-                PresentationsDBstruct.PresentationsEntry.COLUMN_PRESENTER +" TEXT NOT NULL, "+
-                PresentationsDBstruct.PresentationsEntry.COLUMN_ROOM +" TEXT NOT NULL, "+
-                PresentationsDBstruct.PresentationsEntry.COLUMN_START+" TEXT NOT NULL, "+
-                PresentationsDBstruct.PresentationsEntry.COLUMN_DESCRIPTION + " TEXT NOT NULL";
+        final String SQL_CREATE_PRESENTATIONS_TABLE = "CREATE TABLE " + PresentationsDBstruct.PresentationsEntry.TABLE_NAME + "( " +
+                PresentationsDBstruct.PresentationsEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                PresentationsDBstruct.PresentationsEntry.TABLE_PRESENTATION_ID + " INTEGER NOT NULL, " +
+                PresentationsDBstruct.PresentationsEntry.COLUMN_PRESENTATION + " TEXT NOT NULL, " +
+                PresentationsDBstruct.PresentationsEntry.COLUMN_PRESENTER + " TEXT NOT NULL, " +
+                PresentationsDBstruct.PresentationsEntry.COLUMN_ROOM + " TEXT NOT NULL, " +
+                PresentationsDBstruct.PresentationsEntry.COLUMN_START + " REAL NOT NULL, " +
+                PresentationsDBstruct.PresentationsEntry.COLUMN_DESCRIPTION + " TEXT NOT NULL, " +
+                PresentationsDBstruct.PresentationsEntry.COLUMN_VOTES + " REAL NOT NULL )";
+
+        db.execSQL(SQL_CREATE_PRESENTATIONS_TABLE);
 
     }
 

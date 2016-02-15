@@ -16,7 +16,7 @@ public class Presentation {
     private String presenter;
     @SerializedName("Start")
 
-    private float start;
+    private double start;
     @SerializedName("Desc")
 
     private String desc;
@@ -31,10 +31,10 @@ public class Presentation {
     public Presentation(int id,
                         String presentation,
                         String presenter,
-                        float start,
+                        double start,
                         String desc,
                         String room,
-                        Double vote) {
+                        double vote) {
 
         this.id = id;
         this.presentation = presentation;
@@ -78,7 +78,7 @@ public class Presentation {
         this.desc = desc;
     }
 
-    public float getStart() {
+    public double getStart() {
         return start;
     }
 

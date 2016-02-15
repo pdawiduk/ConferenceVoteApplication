@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 /**
  * Created by dawiduk on 3-2-16.
@@ -129,7 +130,8 @@ public class PresentationsProvider extends ContentProvider {
                 db.beginTransaction();
                 int returncount=0;
                 for (ContentValues value : values){
-                    long _id = db.insert(PresentationsDBstruct.PresentationsEntry.TABLE_NAME,null, value);
+                    long _id = db.insert(PresentationsDBstruct.PresentationsEntry.TABLE_NAME, null, value);
+
                     if (_id != -1 ) returncount++;
                 }
                 db.setTransactionSuccessful();
@@ -153,11 +155,15 @@ public class PresentationsProvider extends ContentProvider {
 
         switch(help) {
             case PRESENTATION_LIST:
-                rowsDeleted = db.delete(PresentationsDBstruct.PresentationsEntry.TABLE_NAME, selection, selectionArgs);
+                rowsDeleted = db.delete(PresentationsDBstruct.PresentationsEntry.TABLE_NAME,
+                        selection,
+                        selectionArgs);
                 break;
             case PRESENTATION_ID:
                 String id = uri.getLastPathSegment();
-                rowsDeleted=db.delete(PresentationsDBstruct.PresentationsEntry.TABLE_NAME, PresentationsDBstruct.PresentationsEntry._ID + " = " + id , selectionArgs);
+                rowsDeleted=db.delete(PresentationsDBstruct.PresentationsEntry.TABLE_NAME,
+                        PresentationsDBstruct.PresentationsEntry._ID + " = " + id ,
+                        selectionArgs);
                 break;
 
             default:
