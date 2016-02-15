@@ -17,13 +17,26 @@ public class AgendaAdapter extends RecyclerView.Adapter {
 
     private Context context;
     private RecyclerView recyclerView;
+    private int sectionNumber;
 
-    private final String[] projection=
+    private static final String[] projection ={
+
+            PresentationsDBstruct.PresentationsEntry.COLUMN_START,
+            PresentationsDBstruct.PresentationsEntry.COLUMN_PRESENTATION,
+            PresentationsDBstruct.PresentationsEntry.COLUMN_PRESENTER,
+            PresentationsDBstruct.PresentationsEntry.COLUMN_ROOM,
+
+    };
+
+
+    Cursor cursor = context.getContentResolver().query(PresentationsDBstruct.PresentationsEntry.CONTENT_URI,
+                                                               )
 
     private class ViewHolder extends RecyclerView.ViewHolder {
         public TextView startTime;
         public TextView presentator;
         public TextView room;
+
 
         public ViewHolder(View view) {
             super(view);
@@ -33,27 +46,41 @@ public class AgendaAdapter extends RecyclerView.Adapter {
         }
     }
 
-    public AgendaAdapter(Context context, RecyclerView recyclerView){
+    public AgendaAdapter(Context context, RecyclerView recyclerView,int sectionNumber){
 
         this.context=context;
         this.recyclerView=recyclerView;
+        this.sectionNumber=sectionNumber;
     }
+
+
 
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Cursor cursor = context.getContentResolver().query(PresentationsDBstruct.PresentationsEntry.CONTENT_URI,
-                )
+
         return null;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
+            switch(sectionNumber){
+                case 1:
+                    cursor=context.getContentResolver().query();
+                    break;
+                case 2:
+                    cursor=context.getContentResolver().query();
+                    break;
+                case 3:
+                    cursor=context.getContentResolver().query();
+                    break;
+            }
+
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return cursor.getCount() ;
     }
 }

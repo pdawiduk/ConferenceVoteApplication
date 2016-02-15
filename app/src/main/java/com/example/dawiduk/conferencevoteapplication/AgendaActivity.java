@@ -72,7 +72,7 @@ public class AgendaActivity extends AppCompatActivity {
 
 
     public static class PlaceholderFragment extends Fragment {
-        private ArrayAdapter<String> adapter;
+        private AgendaAdapter adapter;
 
         private static final String ARG_SECTION_NUMBER = "section_number";
 
@@ -90,8 +90,8 @@ public class AgendaActivity extends AppCompatActivity {
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
-            args.putStringArray(ARG_SECTION_NUMBER, presentations[sectionNumber-1]);
-            args.put
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+
             fragment.setArguments(args);
             return fragment;
         }
@@ -100,11 +100,7 @@ public class AgendaActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
 
-            adapter=new ArrayAdapter<String>(getActivity(),
-                    R.layout.presentation_desc,
-                    R.id.list_presentation_textview,
-                    (getArguments().getStringArray(ARG_SECTION_NUMBER))
-                    );
+
 
             View rootView = inflater.inflate(R.layout.fragment_agenda, container, false);
 
@@ -112,6 +108,8 @@ public class AgendaActivity extends AppCompatActivity {
             agendaRecycledView.setHasFixedSize(true);
             agendaRecycledView.setLayoutManager(new LinearLayoutManager(getContext()));
             agendaRecycledView.setItemAnimator(new DefaultItemAnimator());
+
+            adapter=new AgendaAdapter(getContext(),agendaRecycledView,savedInstanceState.getInt(ARG_SECTION_NUMBER));
 
             return rootView;
         }
