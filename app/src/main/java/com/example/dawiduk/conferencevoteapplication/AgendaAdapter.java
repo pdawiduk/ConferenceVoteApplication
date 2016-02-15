@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.dawiduk.conferencevoteapplication.database.PresentationsDBstruct;
+import com.example.dawiduk.conferencevoteapplication.database.PresentationsDb;
+import com.example.dawiduk.conferencevoteapplication.database.PresentationsProvider;
 
 /**
  * Created by dawiduk on 15-2-16.
@@ -18,6 +20,11 @@ public class AgendaAdapter extends RecyclerView.Adapter {
     private Context context;
     private RecyclerView recyclerView;
     private int sectionNumber;
+
+    private static final int COLUMN_START=0;
+    private static final int INDEX_COLUMN_PRESENTATION=1;
+    private static final int INDEX_COLUMN_PRESENTER=2;
+    private static final int COLUMN_ROOM=3;
 
     private static final String[] projection ={
 
@@ -29,13 +36,14 @@ public class AgendaAdapter extends RecyclerView.Adapter {
     };
 
 
-    Cursor cursor = context.getContentResolver().query(PresentationsDBstruct.PresentationsEntry.CONTENT_URI,
-                                                               )
+    Cursor cursor ;
+
 
     private class ViewHolder extends RecyclerView.ViewHolder {
         public TextView startTime;
         public TextView presentator;
         public TextView room;
+        public TextView presentation;
 
 
         public ViewHolder(View view) {
@@ -43,6 +51,7 @@ public class AgendaAdapter extends RecyclerView.Adapter {
             startTime = (TextView) view.findViewById(R.id.start_time);
             presentator= (TextView) view.findViewById(R.id.presenter);
             room=(TextView) view.findViewById(R.id.room);
+            presentation=(TextView) view.findViewById(R.id.presentation);
         }
     }
 
@@ -67,13 +76,53 @@ public class AgendaAdapter extends RecyclerView.Adapter {
 
             switch(sectionNumber){
                 case 1:
-                    cursor=context.getContentResolver().query();
+                    cursor=context.getContentResolver().query(PresentationsDb.BASE_CONTENT_URI,
+                            projection,
+                            PresentationsDBstruct.PresentationsEntry.COLUMN_ROOM +"="+ "aula",
+                            null,
+                            null);
+                    if(cursor.moveToFirst()){
+                        do{
+                            ((ViewHolder) holder).startTime.setText(Double.toString(cursor.getDouble(COLUMN_START)));
+                            ((ViewHolder) holder).presentation.setText(cursor.getString(INDEX_COLUMN_PRESENTATION));
+                            ((ViewHolder) holder).presentator.setText(cursor.getString(INDEX_COLUMN_PRESENTER));
+                            ((ViewHolder) holder).room.setText(cursor.getString(COLUMN_ROOM));
+
+                        }
+                        while (cursor.moveToNext());
+                    }
                     break;
                 case 2:
-                    cursor=context.getContentResolver().query();
+                    cursor=context.getContentResolver().query(PresentationsDb.BASE_CONTENT_URI,
+                            projection,
+                            PresentationsDBstruct.PresentationsEntry.COLUMN_ROOM +"="+ "room a",
+                            null,
+                            null);
+                    if(cursor.moveToFirst()){
+                        do{
+                            ((ViewHolder) holder).startTime.setText(Double.toString(cursor.getDouble(COLUMN_START)));
+                            ((ViewHolder) holder).presentation.setText(cursor.getString(INDEX_COLUMN_PRESENTATION));
+                            ((ViewHolder) holder).presentator.setText(cursor.getString(INDEX_COLUMN_PRESENTER));
+                            ((ViewHolder) holder).room.setText(cursor.getString(COLUMN_ROOM));
+                        }
+                        while (cursor.moveToNext());
+                    }
                     break;
                 case 3:
-                    cursor=context.getContentResolver().query();
+                    cursor=context.getContentResolver().query(PresentationsDb.BASE_CONTENT_URI,
+                            projection,
+                            PresentationsDBstruct.PresentationsEntry.COLUMN_ROOM +"="+ "room c",
+                            null,
+                            null);
+                    if(cursor.moveToFirst()){
+                        do{
+                            ((ViewHolder) holder).startTime.setText(Double.toString(cursor.getDouble(COLUMN_START)));
+                            ((ViewHolder) holder).presentation.setText(cursor.getString(INDEX_COLUMN_PRESENTATION));
+                            ((ViewHolder) holder).presentator.setText(cursor.getString(INDEX_COLUMN_PRESENTER));
+                            ((ViewHolder) holder).room.setText(cursor.getString(COLUMN_ROOM));
+                        }
+                        while (cursor.moveToNext());
+                    }
                     break;
             }
 
