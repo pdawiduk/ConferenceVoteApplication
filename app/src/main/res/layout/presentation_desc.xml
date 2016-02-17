@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="80dp"
 
@@ -9,10 +10,11 @@
     <FrameLayout
         android:layout_width="60dp"
         android:layout_height="wrap_content">
+
         <TextView
+            android:id="@+id/start_time"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/start_time"/>
+            android:layout_height="wrap_content" />
 
 
     </FrameLayout>
@@ -51,11 +53,11 @@
         android:orientation="vertical">
 
         <TextView
-            android:text="Room"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center|center_vertical"
             android:fontFamily="sans-serif-condensed"
+            android:text="Room"
             android:textAppearance="?android:textAppearanceLarge" />
 
         <TextView
