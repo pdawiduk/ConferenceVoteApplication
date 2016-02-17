@@ -11,9 +11,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,8 +22,6 @@ import android.widget.ListView;
 
 import com.example.dawiduk.conferencevoteapplication.database.PresentationsDBstruct;
 import com.example.dawiduk.conferencevoteapplication.database.PresentationsDb;
-
-import java.util.List;
 
 public class AgendaActivity extends AppCompatActivity {
 
@@ -112,14 +108,9 @@ public class AgendaActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
 
-
             Bundle args = getArguments();
             View rootView = inflater.inflate(R.layout.fragment_agenda, container, false);
-
-            SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) container.findViewById(R.id.swiperefresh);
-            ListView presentationsListView = (ListView) container.findViewById(R.id.presentationListView);
-
-
+            ListView presentationsListView = (ListView) rootView.findViewById(R.id.presentationListView);
             adapter = new AgendaAdapter(getContext(),null,0 );
             presentationsListView.setAdapter(adapter);
             return rootView;
@@ -128,7 +119,7 @@ public class AgendaActivity extends AppCompatActivity {
         @Override
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
-            Bundle bundle = getArguments();
+
             int sectionNumber = args.getInt(ARG_SECTION_NUMBER);
             String sortOrder = PresentationsDBstruct.PresentationsEntry.COLUMN_START + " ASC";
             switch (sectionNumber) {
@@ -164,15 +155,16 @@ public class AgendaActivity extends AppCompatActivity {
             return null;
 
         }
+
+
         @Override
         public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-
             adapter.swapCursor(data);
-
         }
 
         @Override
         public void onLoaderReset(Loader<Cursor> loader) {
+
             adapter.swapCursor(null);
         }
     }
@@ -205,12 +197,9 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
                 return "room a";
             case 2:
                 return "room c";
-
-
         }
         return null;
     }
-
 
 }
 }
