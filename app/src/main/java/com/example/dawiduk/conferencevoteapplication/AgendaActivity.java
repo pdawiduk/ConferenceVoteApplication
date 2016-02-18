@@ -1,5 +1,6 @@
 package com.example.dawiduk.conferencevoteapplication;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +12,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -28,6 +30,8 @@ public class AgendaActivity extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,11 +94,12 @@ public class AgendaActivity extends AppCompatActivity {
         }
 
 
+
+
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-
             fragment.setArguments(args);
             return fragment;
         }
@@ -111,7 +116,9 @@ public class AgendaActivity extends AppCompatActivity {
             Bundle args = getArguments();
             View rootView = inflater.inflate(R.layout.fragment_agenda, container, false);
             ListView presentationsListView = (ListView) rootView.findViewById(R.id.presentationListView);
-            adapter = new AgendaAdapter(getContext(),null,0 );
+            SwipeRefreshLayout swipeRefreshLayout =(SwipeRefreshLayout) rootView.findViewById(R.id.swiperefresh);
+
+            adapter = new AgendaAdapter(getContext().,null,0 );
             presentationsListView.setAdapter(adapter);
             return rootView;
         }

@@ -73,62 +73,7 @@ public class AgendaAdapter extends CursorAdapter {
         this.context=context;
     }
 
-//    @Override
-//    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-//
-//            switch(sectionNumber){
-//                case 1:
-//                    cursor=context.getContentResolver().query(PresentationsDb.BASE_CONTENT_URI,
-//                            projection,
-//                            PresentationsDBstruct.PresentationsEntry.COLUMN_ROOM +"="+ "aula",
-//                            null,
-//                            null);
-//                    if(cursor.moveToFirst()){
-//                        do{
-//                            ((ViewHolder) holder).startTime.setText(Double.toString(cursor.getDouble(COLUMN_START)));
-//                            ((ViewHolder) holder).presentation.setText(cursor.getString(INDEX_COLUMN_PRESENTATION));
-//                            ((ViewHolder) holder).presentator.setText(cursor.getString(INDEX_COLUMN_PRESENTER));
-//                            ((ViewHolder) holder).room.setText(cursor.getString(COLUMN_ROOM));
-//
-//                        }
-//                        while (cursor.moveToNext());
-//                    }
-//                    break;
-//                case 2:
-//                    cursor=context.getContentResolver().query(PresentationsDb.BASE_CONTENT_URI,
-//                            projection,
-//                            PresentationsDBstruct.PresentationsEntry.COLUMN_ROOM +"="+ "room a",
-//                            null,
-//                            null);
-//                    if(cursor.moveToFirst()){
-//                        do{
-//                            ((ViewHolder) holder).startTime.setText(Double.toString(cursor.getDouble(COLUMN_START)));
-//                            ((ViewHolder) holder).presentation.setText(cursor.getString(INDEX_COLUMN_PRESENTATION));
-//                            ((ViewHolder) holder).presentator.setText(cursor.getString(INDEX_COLUMN_PRESENTER));
-//                            ((ViewHolder) holder).room.setText(cursor.getString(COLUMN_ROOM));
-//                        }
-//                        while (cursor.moveToNext());
-//                    }
-//                    break;
-//                case 3:
-//                    cursor=context.getContentResolver().query(PresentationsDb.BASE_CONTENT_URI,
-//                            projection,
-//                            PresentationsDBstruct.PresentationsEntry.COLUMN_ROOM +"="+ "room c",
-//                            null,
-//                            null);
-//                    if(cursor.moveToFirst()){
-//                        do{
-//                            ((ViewHolder) holder).startTime.setText(Double.toString(cursor.getDouble(COLUMN_START)));
-//                            ((ViewHolder) holder).presentation.setText(cursor.getString(INDEX_COLUMN_PRESENTATION));
-//                            ((ViewHolder) holder).presentator.setText(cursor.getString(INDEX_COLUMN_PRESENTER));
-//                            ((ViewHolder) holder).room.setText(cursor.getString(COLUMN_ROOM));
-//                        }
-//                        while (cursor.moveToNext());
-//                    }
-//                    break;
-//            }
-//
-//    }
+
 
 
 }
