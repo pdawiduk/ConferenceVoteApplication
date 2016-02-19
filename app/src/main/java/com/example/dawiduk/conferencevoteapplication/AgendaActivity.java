@@ -1,7 +1,7 @@
 package com.example.dawiduk.conferencevoteapplication;
 
-import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -81,30 +81,21 @@ public class AgendaActivity extends AppCompatActivity {
     public static class PlaceholderFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
         private AgendaAdapter adapter;
 
+        private static final int AULA=1;
+        private static final int ROOM_A=2;
+        private static final int ROOM_C=3;
+
         private static final String ARG_SECTION_NUMBER = "section_number";
         private static final int DETAIL_LOADER =0;
 
-        public enum rooms{
-            AULA(1),
-            ROOM_A(2),
-            ROOM_C(3);
 
-            private int room;
-
-            rooms(int room){
-                this.room=room;
-            }
-            public int getRoom(){
-                return room;
-            }
-
-        }
 
         private final static String[] COLUMN_PRESENTATIONS = {
                 PresentationsDBstruct.PresentationsEntry.TABLE_PRESENTATION_ID,
                 PresentationsDBstruct.PresentationsEntry.COLUMN_PRESENTATION,
                 PresentationsDBstruct.PresentationsEntry.COLUMN_PRESENTER,
-                PresentationsDBstruct.PresentationsEntry.COLUMN_START
+                PresentationsDBstruct.PresentationsEntry.COLUMN_START,
+                PresentationsDBstruct.PresentationsEntry.COLUMN_ROOM
         };
 
         public PlaceholderFragment() {
@@ -149,36 +140,40 @@ public class AgendaActivity extends AppCompatActivity {
         @Override
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
+            final Uri THIS_CONTENT_URI =
+                    PresentationsDBstruct.PresentationsEntry.BASE_CONTENT_URI.buildUpon().appendPath(PresentationsDBstruct.PresentationsEntry.PATH_PRESENTATION).build();
             Bundle sectionArgs=getArguments();
 
+
             int sectionNumber = sectionArgs.getInt(ARG_SECTION_NUMBER);
+          //  Rooms rooms =Rooms(sectionArgs);
             String sortOrder = PresentationsDBstruct.PresentationsEntry.COLUMN_START + " ASC";
             switch (sectionNumber) {
-                case 1:
+                case AULA:
                     return new CursorLoader(
                             getActivity(),
-                            PresentationsDb.BASE_CONTENT_URI,
+                            THIS_CONTENT_URI,
                             COLUMN_PRESENTATIONS,
-                            PresentationsDBstruct.PresentationsEntry.COLUMN_ROOM + "=" + "aula",
+                            PresentationsDBstruct.PresentationsEntry.COLUMN_ROOM + " = " + '"'+ "aula"+'"',
                             null,
                             sortOrder);
 
-                case 2:
+                case ROOM_A:
 
                     return new CursorLoader(
                             getActivity(),
-                            PresentationsDb.BASE_CONTENT_URI,
+                            THIS_CONTENT_URI,
                             COLUMN_PRESENTATIONS,
-                            PresentationsDBstruct.PresentationsEntry.COLUMN_ROOM + "=" + "room a",
+                            PresentationsDBstruct.PresentationsEntry.COLUMN_ROOM + " = "+ '"' + "room a"+ '"',
                             null,
                             sortOrder);
 
-                case 3:
+                case ROOM_C:
                     return new CursorLoader(
                             getActivity(),
-                            PresentationsDb.BASE_CONTENT_URI,
+                            THIS_CONTENT_URI,
                             COLUMN_PRESENTATIONS,
-                            PresentationsDBstruct.PresentationsEntry.COLUMN_ROOM + "=" + "room c",
+                            PresentationsDBstruct.PresentationsEntry.COLUMN_ROOM + " = "+ '"' + "room c"+ '"',
                             null,
                             sortOrder);
 
@@ -193,13 +188,13 @@ public class AgendaActivity extends AppCompatActivity {
         @Override
         public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
-            adapter.swapCursor(data);
+            loader.swapCursor(data);
         }
 
         @Override
         public void onLoaderReset(Loader<Cursor> loader) {
 
-            adapter.swapCursor(null);
+
         }
     }
 
