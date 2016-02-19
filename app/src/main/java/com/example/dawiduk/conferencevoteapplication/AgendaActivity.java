@@ -82,6 +82,23 @@ public class AgendaActivity extends AppCompatActivity {
         private AgendaAdapter adapter;
 
         private static final String ARG_SECTION_NUMBER = "section_number";
+        private static final int DETAIL_LOADER =0;
+
+        public enum rooms{
+            AULA(1),
+            ROOM_A(2),
+            ROOM_C(3);
+
+            private int room;
+
+            rooms(int room){
+                this.room=room;
+            }
+            public int getRoom(){
+                return room;
+            }
+
+        }
 
         private final static String[] COLUMN_PRESENTATIONS = {
                 PresentationsDBstruct.PresentationsEntry.TABLE_PRESENTATION_ID,
@@ -118,16 +135,23 @@ public class AgendaActivity extends AppCompatActivity {
             ListView presentationsListView = (ListView) rootView.findViewById(R.id.presentationListView);
             SwipeRefreshLayout swipeRefreshLayout =(SwipeRefreshLayout) rootView.findViewById(R.id.swiperefresh);
 
-            adapter = new AgendaAdapter(getContext().,null,0 );
+            adapter = new AgendaAdapter(this.getActivity(),null,0 );
             presentationsListView.setAdapter(adapter);
             return rootView;
         }
 
         @Override
+        public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+            getLoaderManager().initLoader(DETAIL_LOADER, null, this);
+            super.onActivityCreated(savedInstanceState);
+        }
+
+        @Override
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
+            Bundle sectionArgs=getArguments();
 
-            int sectionNumber = args.getInt(ARG_SECTION_NUMBER);
+            int sectionNumber = sectionArgs.getInt(ARG_SECTION_NUMBER);
             String sortOrder = PresentationsDBstruct.PresentationsEntry.COLUMN_START + " ASC";
             switch (sectionNumber) {
                 case 1:
@@ -158,14 +182,17 @@ public class AgendaActivity extends AppCompatActivity {
                             null,
                             sortOrder);
 
+                default:  throw new IllegalArgumentException();
+
             }
-            return null;
+
 
         }
 
 
         @Override
         public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+
             adapter.swapCursor(data);
         }
 
