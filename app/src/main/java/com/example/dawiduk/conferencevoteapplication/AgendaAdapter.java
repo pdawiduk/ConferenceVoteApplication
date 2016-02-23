@@ -40,7 +40,7 @@ public class AgendaAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        return LayoutInflater.from(context).inflate(R.layout.fragment_agenda,parent,false);
+        return LayoutInflater.from(context).inflate(R.layout.presentation_desc,parent,false);
     }
 
     @Override
@@ -53,7 +53,11 @@ public class AgendaAdapter extends CursorAdapter {
         Log.d(LOG_TAG, "kolumna 1 " + cursor.getColumnNames()[4]);
         Log.d(LOG_TAG, "kolumna 1 " + cursor.getColumnNames()[5]);
 
-
+//if(view.getTag()) {
+//    ViewHolder viewH = (ViewHolder)view.getTag();
+//} else {
+//    view.setTag(view);
+//}
 
 
         ViewHolder holder =new ViewHolder(view);
