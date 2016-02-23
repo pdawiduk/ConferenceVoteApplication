@@ -28,14 +28,10 @@ public class AgendaFetcher extends IntentService {
 
     private static final String LOG_TAG = AgendaFetcher.class.getSimpleName();
 
-
-
     public AgendaFetcher() {
         super("AgendaFetcher");
 
     }
-
-
 
     @Override
     protected void onHandleIntent(Intent intent) {

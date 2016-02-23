@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,15 +18,15 @@ import com.example.dawiduk.conferencevoteapplication.database.PresentationsDb;
  * Created by dawiduk on 15-2-16.
  */
 public class AgendaAdapter extends CursorAdapter {
-
+    private static final String LOG_TAG = AgendaAdapter.class.getSimpleName();
     private Context context;
     private SwipeRefreshLayout swipeRefreshLayout;
     private int sectionNumber;
 
-    private static final int COLUMN_START=0;
-    private static final int INDEX_COLUMN_PRESENTATION=1;
-    private static final int INDEX_COLUMN_PRESENTER=2;
-    private static final int COLUMN_ROOM=3;
+    private static final int COLUMN_START=4;
+    private static final int INDEX_COLUMN_PRESENTATION=2;
+    private static final int INDEX_COLUMN_PRESENTER=3;
+    private static final int COLUMN_ROOM=5;
 
     private static final String[] projection = {
             PresentationsDBstruct.PresentationsEntry.COLUMN_START,
@@ -44,8 +45,19 @@ public class AgendaAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
+        Log.d(LOG_TAG, "ilosc kolumn w kursorze " + Integer.toString(cursor.getColumnCount()));
+        Log.d(LOG_TAG, "kolumna 1 " + cursor.getColumnNames()[0]);
+        Log.d(LOG_TAG, "kolumna 1 " + cursor.getColumnNames()[1]);
+        Log.d(LOG_TAG, "kolumna 1 " + cursor.getColumnNames()[2]);
+        Log.d(LOG_TAG, "kolumna 1 " + cursor.getColumnNames()[3]);
+        Log.d(LOG_TAG, "kolumna 1 " + cursor.getColumnNames()[4]);
+        Log.d(LOG_TAG, "kolumna 1 " + cursor.getColumnNames()[5]);
+
+
+
+
         ViewHolder holder =new ViewHolder(view);
-        ((ViewHolder) holder).startTime.setText(Double.toString(cursor.getDouble(COLUMN_START)));
+        ((ViewHolder) holder).startTime.setText(cursor.getString(COLUMN_START));
         ((ViewHolder) holder).presentation.setText(cursor.getString(INDEX_COLUMN_PRESENTATION));
         ((ViewHolder) holder).presentator.setText(cursor.getString(INDEX_COLUMN_PRESENTER));
         ((ViewHolder) holder).room.setText(cursor.getString(COLUMN_ROOM));

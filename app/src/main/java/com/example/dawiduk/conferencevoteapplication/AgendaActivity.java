@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.dawiduk.conferencevoteapplication.database.PresentationsDBstruct;
 import com.example.dawiduk.conferencevoteapplication.database.PresentationsDb;
@@ -88,9 +89,23 @@ public class AgendaActivity extends AppCompatActivity {
         private static final String ARG_SECTION_NUMBER = "section_number";
         private static final int DETAIL_LOADER =0;
 
+        private static final int COL_PRESENTER=2;
+        private static final int COL_START=4;
+        private static final int COL_PRESENTATION=1;
+        private static final int COL_ROOM=3;
+
+
+        private TextView presenter;
+        private TextView room;
+        private TextView start;
+        private TextView presentation;
+        private TextView vote;
+
+
 
 
         private final static String[] COLUMN_PRESENTATIONS = {
+                PresentationsDBstruct.PresentationsEntry._ID,
                 PresentationsDBstruct.PresentationsEntry.TABLE_PRESENTATION_ID,
                 PresentationsDBstruct.PresentationsEntry.COLUMN_PRESENTATION,
                 PresentationsDBstruct.PresentationsEntry.COLUMN_PRESENTER,
@@ -188,12 +203,12 @@ public class AgendaActivity extends AppCompatActivity {
         @Override
         public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
-            loader.swapCursor(data);
+           adapter.swapCursor(data);
         }
 
         @Override
         public void onLoaderReset(Loader<Cursor> loader) {
-
+        adapter.swapCursor(null);
 
         }
     }
