@@ -31,6 +31,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        voteButton.setOnClickListener(new AdapterView.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, VoteActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
     }
 
