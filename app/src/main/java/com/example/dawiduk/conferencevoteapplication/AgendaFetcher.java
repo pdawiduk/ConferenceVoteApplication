@@ -24,7 +24,7 @@ public class AgendaFetcher extends IntentService {
 
     private static List<ContentValues> contentList = new ArrayList<>();
 
-    private static final String ENDPOINT = "http://10.0.2.2:80/RESTfulExample/rest/presentation/show";
+    private static final String ENDPOINT = "http://10.18.121.115:80/RESTfulExample/rest/presentation/show";
 
     private static final String LOG_TAG = AgendaFetcher.class.getSimpleName();
 
@@ -35,7 +35,7 @@ public class AgendaFetcher extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-
+        this.getContentResolver().delete(PresentationsDBstruct.PresentationsEntry.CONTENT_URI,null,null);
         Gson gson = new Gson();
         OkHttpClient client = new OkHttpClient();
 

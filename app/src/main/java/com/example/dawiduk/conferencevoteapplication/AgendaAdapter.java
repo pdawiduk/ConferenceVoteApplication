@@ -45,20 +45,12 @@ public class AgendaAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        Log.d(LOG_TAG, "ilosc kolumn w kursorze " + Integer.toString(cursor.getColumnCount()));
-        Log.d(LOG_TAG, "kolumna 1 " + cursor.getColumnNames()[0]);
-        Log.d(LOG_TAG, "kolumna 1 " + cursor.getColumnNames()[1]);
-        Log.d(LOG_TAG, "kolumna 1 " + cursor.getColumnNames()[2]);
-        Log.d(LOG_TAG, "kolumna 1 " + cursor.getColumnNames()[3]);
-        Log.d(LOG_TAG, "kolumna 1 " + cursor.getColumnNames()[4]);
-        Log.d(LOG_TAG, "kolumna 1 " + cursor.getColumnNames()[5]);
 
 //if(view.getTag()) {
 //    ViewHolder viewH = (ViewHolder)view.getTag();
 //} else {
 //    view.setTag(view);
 //}
-
 
         ViewHolder holder =new ViewHolder(view);
         ((ViewHolder) holder).startTime.setText(cursor.getString(COLUMN_START));
