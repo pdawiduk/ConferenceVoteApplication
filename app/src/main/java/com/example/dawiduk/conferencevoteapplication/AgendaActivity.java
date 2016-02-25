@@ -148,6 +148,8 @@ public class AgendaActivity extends AppCompatActivity {
 
         @Override
         public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+
+
             getLoaderManager().initLoader(DETAIL_LOADER, null, this);
             super.onActivityCreated(savedInstanceState);
         }

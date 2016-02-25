@@ -22,6 +22,7 @@ public class AgendaAdapter extends CursorAdapter {
     private Context context;
     private SwipeRefreshLayout swipeRefreshLayout;
     private int sectionNumber;
+    private boolean actualPresentation=false;
 
     private static final int COLUMN_START=4;
     private static final int INDEX_COLUMN_PRESENTATION=2;
@@ -46,11 +47,7 @@ public class AgendaAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
 
-//if(view.getTag()) {
-//    ViewHolder viewH = (ViewHolder)view.getTag();
-//} else {
-//    view.setTag(view);
-//}
+
 
         ViewHolder holder =new ViewHolder(view);
         ((ViewHolder) holder).startTime.setText(cursor.getString(COLUMN_START));

@@ -3,6 +3,8 @@
     package="com.example.dawiduk.conferencevoteapplication">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"></uses-permission>
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"></uses-permission>
 
     <application
         android:allowBackup="true"
@@ -39,12 +41,7 @@
         <activity
             android:name=".VoteActivity"
             android:label="@string/title_activity_vote"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.dawiduk.conferencevoteapplication.MainActivity" />
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -24,7 +24,7 @@ public class AgendaFetcher extends IntentService {
 
     private static List<ContentValues> contentList = new ArrayList<>();
 
-    private static final String ENDPOINT = "http://10.18.121.115:80/RESTfulExample/rest/presentation/show";
+    private static final String ENDPOINT = "http://10.18.121.91:80/RESTfulExample/rest/presentation/show";
 
     private static final String LOG_TAG = AgendaFetcher.class.getSimpleName();
 
